@@ -15,7 +15,7 @@ public class UserModel {
 	@NotBlank(message = "First Name Can Not Be Blank!")
 	private String firstName;
 
-	@NotBlank(message = "First Name Can Not Be Blank!")
+	@NotBlank(message = "Last Name Can Not Be Blank!")
 	private String lastName;
 
 	@NotBlank(message = "Email Address Can Not Be Blank!")

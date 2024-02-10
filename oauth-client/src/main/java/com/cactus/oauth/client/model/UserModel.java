@@ -24,7 +24,7 @@ public class UserModel {
 
 	@NotBlank(message = "Password Can Not Be Blank!")
 	@Size(min = 8, max = 30)
-	@Pattern(message = "Password Not Meeting Minimum Requirements", regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>])$")
+	@Pattern(message = "Password Not Meeting Minimum Requirements", regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,30}$")
 	private String password;
 
 	private String matchingPassword;

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>oauth-client</module>
+        <module>oauth-resource-server</module>
+
+<!-- NOT REQUIRED: Using Okta Auth Server -->
+<!-- <module>oauth-authorization-server</module> -->
+
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.2</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.cactus</groupId>
+    <artifactId>okta-auth-impl</artifactId>
+    <name>okta-auth-impl</name>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-boot.version>3.2.1</spring-boot.version>
+        <spring-boot-security.version>6.2.1</spring-boot-security.version>
+        <lombok.version>1.18.30</lombok.version>
+        <mysql-driver.version>8.2.0</mysql-driver.version>
+        <spring.javaformat.version>0.0.40</spring.javaformat.version>
+        <javax.xml.version>2.3.1</javax.xml.version>
+        <okta.sdk.api.version>15.0.0</okta.sdk.api.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <!-- local dependencies -->
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

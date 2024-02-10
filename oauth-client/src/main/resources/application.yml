@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/user_registration
+    username: root
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            provider: spring
+            client-id: 0oaf0ow40uUMcVVgv5d7
+            client-secret: U9Ev8IH2-T3ukJ698-WqarqLq6S-8toAmG0RkLbVbXTVAoLReTPlogW9f2-J5-8L
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
+            scope: openid+profile+api.read
+
+        provider:
+          spring:
+            issuer-uri: https://dev-22461297.okta.com/oauth2/default
+
+logging:
+  level:
+    org.springframework.web.client.RestTemplate: DEBUG
+
+resource-server:
+  api-url-value: http://localhost:8090/api/v1
+
+okta:
+  domain-url: https://dev-22461297.okta.com
+  api-token: 00rieZ5ksXHOVvb3-D1PmON40qYuYhwRgVt7vFyEMb
+

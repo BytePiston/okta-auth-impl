@@ -29,6 +29,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
@@ -61,13 +63,16 @@ public class UserController {
 	@Value("${resource-server.api-url-value}")
 	public String RESOURCE_SERVER_API_URL;
 
+	private DiscoveryClient discoveryClient;
+
 	@Autowired
 	public UserController(IUserService userService, ApplicationEventPublisher eventPublisher, WebClient webClient,
-			ApiClient apiClient) {
+			ApiClient apiClient, DiscoveryClient discoveryClient) {
 		this.userService = userService;
 		this.eventPublisher = eventPublisher;
 		this.webClient = webClient;
 		this.apiClient = apiClient;
+		this.discoveryClient = discoveryClient;
 	}
 
 	@PostMapping("/register")
@@ -292,8 +297,9 @@ public class UserController {
 	@GetMapping("/viewAllUsers")
 	public List<UserResponse> fetchAllUsers(
 			@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient authorizedClient) {
+		List<ServiceInstance> serviceInstances = discoveryClient.getInstances(RESOURCE_SERVER_API_URL);
 		return this.webClient.get()
-			.uri(RESOURCE_SERVER_API_URL + "/users")
+			.uri(serviceInstances.get(0).getUri() + "/api/v1/users")
 			.attributes(oauth2AuthorizedClient(authorizedClient))
 			.retrieve()
 			.bodyToMono(new ParameterizedTypeReference<List<UserResponse>>() {

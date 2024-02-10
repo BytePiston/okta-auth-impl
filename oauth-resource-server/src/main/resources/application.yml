@@ -2,6 +2,8 @@ server:
   port: 8090
 
 spring:
+  application:
+    name: oauth-resource-server
   datasource:
     url: jdbc:mysql://localhost:3306/user_registration
     username: root
@@ -16,3 +18,14 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://dev-22461297.okta.com/oauth2/default
+
+eureka:
+  instance:
+    hostname: oauth-resource-server
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 5
+    lease-renewal-interval-in-seconds:    2
+  client:
+    registryFetchIntervalSeconds: 2
+    serviceUrl:
+      defaultZone=${EUREKA_SERVER:http://discovery-server/eureka/}:

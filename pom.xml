@@ -4,12 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
+        <module>discovery-server</module>
         <module>oauth-client</module>
         <module>oauth-resource-server</module>
-
-<!-- NOT REQUIRED: Using Okta Auth Server -->
-<!-- <module>oauth-authorization-server</module> -->
-
     </modules>
 
     <parent>
@@ -26,6 +23,7 @@
     <packaging>pom</packaging>
 
     <properties>
+        <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,6 +34,7 @@
         <spring.javaformat.version>0.0.40</spring.javaformat.version>
         <javax.xml.version>2.3.1</javax.xml.version>
         <okta.sdk.api.version>15.0.0</okta.sdk.api.version>
+        <spring-cloud.version>2023.0.0</spring-cloud.version>
     </properties>
     <dependencyManagement>
         <dependencies>

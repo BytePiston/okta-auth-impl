@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: discovery-server
+
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: discovery-server
+  server:
+    enableSelfPreservation: false
+    expected-client-renewal-interval-seconds:  3
+    evictionIntervalTimerInMs:  3000
+    responseCacheUpdateIntervalMs: 500
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

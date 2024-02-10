@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: oauth-client
   datasource:
     url: jdbc:mysql://localhost:3306/user_registration
     username: root
@@ -20,9 +22,8 @@ spring:
             client-id: 0oaf0ow40uUMcVVgv5d7
             client-secret: U9Ev8IH2-T3ukJ698-WqarqLq6S-8toAmG0RkLbVbXTVAoLReTPlogW9f2-J5-8L
             authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
-            scope: openid+profile+api.read
-
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid, profile, api.read
         provider:
           spring:
             issuer-uri: https://dev-22461297.okta.com/oauth2/default
@@ -31,10 +32,20 @@ logging:
   level:
     org.springframework.web.client.RestTemplate: DEBUG
 
+eureka:
+  instance:
+    hostname: oauth-client
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 5
+    lease-renewal-interval-in-seconds: 2
+  client:
+    registryFetchIntervalSeconds: 2
+    serviceUrl:
+      defaultZone=${EUREKA_SERVER:http://discovery-server/eureka/}:
+
 resource-server:
-  api-url-value: http://localhost:8090/api/v1
+  api-url-value: oauth-resource-server
 
 okta:
   domain-url: https://dev-22461297.okta.com
   api-token: 00rieZ5ksXHOVvb3-D1PmON40qYuYhwRgVt7vFyEMb
-

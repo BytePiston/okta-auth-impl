@@ -13,10 +13,11 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-public class WebClientConfiguration {
+public class WebConfiguration {
 
 	@Value("${okta.domain-url}")
 	public String OKTA_DOMAIN_URL;
@@ -37,7 +38,7 @@ public class WebClientConfiguration {
 		ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
 				authorizedClientManager);
 		oauth2.setDefaultOAuth2AuthorizedClient(true);
-		return WebClient.builder().apply(oauth2.oauth2Configuration()).build();
+		return WebClient.builder().filter(oauth2).apply(oauth2.oauth2Configuration()).build();
 	}
 
 	@Bean

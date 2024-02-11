@@ -5,9 +5,9 @@ spring:
   application:
     name: oauth-client
   datasource:
-    url: jdbc:mysql://localhost:3306/user_registration
-    username: root
-    password: test
+#    url: jdbc:mysql://localhost:3306/user_registration
+#    username: root
+#    password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true

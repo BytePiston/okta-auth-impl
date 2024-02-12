@@ -9,9 +9,6 @@ eureka:
   instance:
     hostname: discovery-server
   server:
-    enableSelfPreservation: false
-    expected-client-renewal-interval-seconds:  3
-    evictionIntervalTimerInMs:  3000
     responseCacheUpdateIntervalMs: 500
   client:
     registerWithEureka: false

@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
@@ -38,7 +37,8 @@ public class WebConfiguration {
 		ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
 				authorizedClientManager);
 		oauth2.setDefaultOAuth2AuthorizedClient(true);
-		return WebClient.builder().filter(oauth2).apply(oauth2.oauth2Configuration()).build();
+		oauth2.setDefaultClientRegistrationId("okta");
+		return WebClient.builder().apply(oauth2.oauth2Configuration()).build();
 	}
 
 	@Bean
@@ -47,6 +47,8 @@ public class WebConfiguration {
 		OAuth2AuthorizedClientProvider authorizedClientProvider = OAuth2AuthorizedClientProviderBuilder.builder()
 			.authorizationCode()
 			.refreshToken()
+			.clientCredentials()
+			.password()
 			.build();
 		DefaultOAuth2AuthorizedClientManager authorizedClientManager = new DefaultOAuth2AuthorizedClientManager(
 				clientRegistrationRepository, authorizedClientRepository);

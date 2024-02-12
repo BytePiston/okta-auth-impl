@@ -18,33 +18,34 @@ spring:
       client:
         registration:
           okta:
-            provider: spring
+            provider: okta
             client-id: 0oaf0ow40uUMcVVgv5d7
             client-secret: U9Ev8IH2-T3ukJ698-WqarqLq6S-8toAmG0RkLbVbXTVAoLReTPlogW9f2-J5-8L
             authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_basic
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid, profile, api.read
         provider:
-          spring:
+          okta:
             issuer-uri: https://dev-22461297.okta.com/oauth2/default
+            authorization-uri: https://dev-22461297.okta.com/oauth2/default/v1/authorize?prompt=consent
+            token-uri: https://dev-22461297.okta.com/oauth2/default/v1/token
 
 logging:
   level:
-    org.springframework.web.client.RestTemplate: DEBUG
+    org.springframework.web.client.RestTemplate: debug
 
 eureka:
   instance:
     hostname: oauth-client
     prefer-ip-address: true
-    lease-expiration-duration-in-seconds: 5
-    lease-renewal-interval-in-seconds: 2
   client:
     registryFetchIntervalSeconds: 2
     serviceUrl:
       defaultZone=${EUREKA_SERVER:http://discovery-server/eureka/}:
 
 resource-server:
-  api-url-value: oauth-resource-server
+  app-name: oauth-resource-server
 
 okta:
   domain-url: https://dev-22461297.okta.com

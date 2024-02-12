@@ -83,7 +83,7 @@ Now, you are ready to integrate Okta authentication into your Spring Boot projec
 2. Build the project using Maven:
    ```bash
    cd okta-auth-impl
-   mvn clean install
+   mvn clean install && docker compose up --build
 
 ## Configuration
 

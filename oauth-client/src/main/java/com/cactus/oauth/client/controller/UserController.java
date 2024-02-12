@@ -15,11 +15,6 @@ import com.cactus.oauth.client.response.UserRegistrationResponse;
 import com.cactus.oauth.client.response.UserResponse;
 import com.cactus.oauth.client.service.IUserService;
 import com.cactus.oauth.client.utils.Utils;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.okta.sdk.authc.credentials.TokenClientCredentials;
-import com.okta.sdk.client.Clients;
 import com.okta.sdk.resource.api.UserApi;
 import com.okta.sdk.resource.client.ApiClient;
 import com.okta.sdk.resource.client.ApiException;
@@ -60,8 +55,8 @@ public class UserController {
 	private final ApiClient apiClient;
 
 	// Fetching Resource-server URL from application.yml;
-	@Value("${resource-server.api-url-value}")
-	public String RESOURCE_SERVER_API_URL;
+	@Value("${resource-server.app-name}")
+	public String RESOURCE_SERVER_APP_NAME;
 
 	private DiscoveryClient discoveryClient;
 
@@ -286,8 +281,9 @@ public class UserController {
 	@GetMapping("/")
 	public UserResponse fetchLoggedInUser(
 			@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient authorizedClient) {
+		List<ServiceInstance> serviceInstances = discoveryClient.getInstances(RESOURCE_SERVER_APP_NAME);
 		return this.webClient.get()
-			.uri(RESOURCE_SERVER_API_URL + "/")
+			.uri(serviceInstances.get(0).getUri() + "/api/v1/")
 			.attributes(oauth2AuthorizedClient(authorizedClient))
 			.retrieve()
 			.bodyToMono(UserResponse.class)
@@ -297,7 +293,7 @@ public class UserController {
 	@GetMapping("/viewAllUsers")
 	public List<UserResponse> fetchAllUsers(
 			@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient authorizedClient) {
-		List<ServiceInstance> serviceInstances = discoveryClient.getInstances(RESOURCE_SERVER_API_URL);
+		List<ServiceInstance> serviceInstances = discoveryClient.getInstances(RESOURCE_SERVER_APP_NAME);
 		return this.webClient.get()
 			.uri(serviceInstances.get(0).getUri() + "/api/v1/users")
 			.attributes(oauth2AuthorizedClient(authorizedClient))
